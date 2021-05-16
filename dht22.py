@@ -10,10 +10,11 @@ dhtSensor = adafruit_dht.DHT22(board.D4)
 g = Gauge('temperature', 'Temperature')
 h = Gauge('humidity', 'Humidity')
 
-def get_temperature():
+def get_temperature(in_celsius=True):
     while True:
         try:
-            return dhtSensor.temperature
+            t = dhtSensor.temperature
+            return t if in_celsius else (9.0 * t / 5) + 32.0
         except RuntimeError:
             pass
 
@@ -24,7 +25,7 @@ def get_humidity():
         except RuntimeError:
             pass
 
-g.set_function(lambda: get_temperature())
+g.set_function(lambda: get_temperature(False))
 h.set_function(lambda: get_humidity())
 
 if __name__ == '__main__':
