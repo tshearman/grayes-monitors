@@ -51,12 +51,14 @@ def bytes_to_celsius(b):
 def average_over(fnc, t=5, dt=1):
     ts = [dt * i for i in range(int(t / dt + 1))]
     fs = 0.0
+    n = 0.0
     for n in ts:
         time.sleep(n)
         f = fnc()
         if not math.isnan(f):
+            n += 1.0
             fs += f
-    return float(fs) / float(len(ts))
+    return fs / n
 
 
 def get_temperature(spi, cs, in_celsius=True):
