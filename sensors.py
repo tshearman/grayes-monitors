@@ -14,10 +14,20 @@ if __name__ == "__main__":
     h = Gauge("humidity", "Humidity")
     i = Gauge("thermocouple", "Thermocouple")
 
-    g.set_function(lambda: dht22.get_temperature(dht, False))
-    h.set_function(lambda: dht22.get_humidity(dht))
-    i.set_function(lambda: max6675.get_temperature(spi, cs, False))
+    stored_temperature = dht22.get_temperature(dht, False)
+    stored_humidity = dht22.get_humidity(dht)
+    stored_thermocouple = max6675.get_temperature(spi, cs, False)
+
+    g.set_function(lambda: stored_temperature)
+    h.set_function(lambda: stored_humidity)
+    i.set_function(lambda: stored_thermocouple)
 
     start_http_server(8000)
     while True:
-        time.sleep(120)
+        stored_temperature = dht22.get_temperature(dht, False)
+        stored_humidity = dht22.get_humidity(dht)
+        stored_thermocouple = max6675.get_temperature(spi, cs, False)
+        print(f"Temperature: {stored_temperature}")
+        print(f"Humidity: {stored_humidity}")
+        print(f"Thermocouple: {stored_thermocouple}")
+        time.sleep(20)

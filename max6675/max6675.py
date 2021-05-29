@@ -64,8 +64,8 @@ def average_over(fnc, t=5, dt=1):
 def get_temperature(spi, cs, in_celsius=True):
     while True:
         try:
-            read = lambda: bytes_to_celsius(read_bytes(spi, cs))
-            t = calibrated(average_over(read), calibration_points)
+            temp = lambda: bytes_to_celsius(read_bytes(spi, cs))
+            t = calibrated(average_over(temp), calibration_points)
             return t if in_celsius else (9.0 * t / 5) + 32.0
         except RuntimeError:
             pass
@@ -73,10 +73,12 @@ def get_temperature(spi, cs, in_celsius=True):
 
 if __name__ == "__main__":
     spi, cs = initialize()
+    t = {"temp": get_temperature(spi, cs, False)}
 
     g = Gauge("temperature", "Temperature")
-    g.set_function(lambda: get_temperature(spi, cs, False))
+    g.set_function(lambda: t["temp"])
 
     start_http_server(8002)
     while True:
         time.sleep(120)
+        t["temp"] = get_temperature(spi, cs, False)
