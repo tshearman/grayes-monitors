@@ -4,11 +4,7 @@ from prometheus_client import start_http_server, Gauge
 import adafruit_dht
 import time
 import board
-import sys
 
-dhtSensor = adafruit_dht.DHT22(board.D4)
-g = Gauge('temperature', 'Temperature')
-h = Gauge('humidity', 'Humidity')
 
 def get_temperature(in_celsius=True):
     while True:
@@ -18,6 +14,7 @@ def get_temperature(in_celsius=True):
         except RuntimeError:
             pass
 
+
 def get_humidity():
     while True:
         try:
@@ -25,10 +22,16 @@ def get_humidity():
         except RuntimeError:
             pass
 
-g.set_function(lambda: get_temperature(False))
-h.set_function(lambda: get_humidity())
 
-if __name__ == '__main__':
-    start_http_server(8000)
+if __name__ == "__main__":
+    dhtSensor = adafruit_dht.DHT22(board.D4)
+
+    g = Gauge("temperature", "Temperature")
+    h = Gauge("humidity", "Humidity")
+
+    g.set_function(lambda: get_temperature(False))
+    h.set_function(lambda: get_humidity())
+
+    start_http_server(8001)
     while True:
         time.sleep(120)
