@@ -29,7 +29,6 @@ g.set_function(lambda: get_temperature(False))
 h.set_function(lambda: get_humidity())
 
 if __name__ == '__main__':
-    # Start up the server to expose the metrics.
     start_http_server(8000)
-    for line in sys.stdin:
-        pass
+    while True:
+        time.sleep(120)
