@@ -61,12 +61,12 @@ def average_over(fnc, t=5, dt=1):
     return fs / n
 
 
-def get_temperature(spi, cs, in_celsius=True):
+def get_temperature(spi, cs, in_celsius=True, digits=3):
     while True:
         try:
             temp = lambda: bytes_to_celsius(read_bytes(spi, cs))
             t = calibrated(average_over(temp), calibration_points)
-            return t if in_celsius else (9.0 * t / 5) + 32.0
+            return round(t if in_celsius else (9.0 * t / 5) + 32.0, digits)
         except RuntimeError:
             pass
 

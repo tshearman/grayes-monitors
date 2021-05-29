@@ -10,19 +10,19 @@ def initialize():
     return adafruit_dht.DHT22(board.D4)
 
 
-def get_temperature(dhtSensor, in_celsius=True):
+def get_temperature(dhtSensor, in_celsius=True, digits=3):
     while True:
         try:
             t = dhtSensor.temperature
-            return t if in_celsius else (9.0 * t / 5) + 32.0
+            return round(t if in_celsius else (9.0 * t / 5) + 32.0, digits)
         except RuntimeError:
             pass
 
 
-def get_humidity(dhtSensor):
+def get_humidity(dhtSensor, digits=3):
     while True:
         try:
-            return dhtSensor.humidity
+            return round(dhtSensor.humidity, digits)
         except RuntimeError:
             pass
 
