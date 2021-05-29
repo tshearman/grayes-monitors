@@ -6,7 +6,11 @@ import time
 import board
 
 
-def get_temperature(in_celsius=True):
+def initialize():
+    return adafruit_dht.DHT22(board.D4)
+
+
+def get_temperature(dhtSensor, in_celsius=True):
     while True:
         try:
             t = dhtSensor.temperature
@@ -15,7 +19,7 @@ def get_temperature(in_celsius=True):
             pass
 
 
-def get_humidity():
+def get_humidity(dhtSensor):
     while True:
         try:
             return dhtSensor.humidity
@@ -24,13 +28,13 @@ def get_humidity():
 
 
 if __name__ == "__main__":
-    dhtSensor = adafruit_dht.DHT22(board.D4)
+    dhtSensor = initialize()
 
     g = Gauge("temperature", "Temperature")
     h = Gauge("humidity", "Humidity")
 
-    g.set_function(lambda: get_temperature(False))
-    h.set_function(lambda: get_humidity())
+    g.set_function(lambda: get_temperature(dhtSensor, False))
+    h.set_function(lambda: get_humidity(dhtSensor))
 
     start_http_server(8001)
     while True:
