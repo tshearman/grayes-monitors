@@ -36,6 +36,6 @@ if __name__ == "__main__":
     g.set_function(lambda: get_temperature(dhtSensor, False))
     h.set_function(lambda: get_humidity(dhtSensor))
 
-    start_http_server(8001)
+    start_http_server(8000)
     while True:
         time.sleep(120)
