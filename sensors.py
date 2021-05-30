@@ -7,9 +7,8 @@ import max6675.max6675 as max6675
 
 if __name__ == "__main__":
 
-    time.sleep(120)
+    time.sleep(5)
 
-    spi, cs = max6675.initialize()
     dht = dht22.initialize()
 
     g = Gauge("temperature", "Temperature")
@@ -19,8 +18,9 @@ if __name__ == "__main__":
     data = {
         "temp": dht22.get_temperature(dht, False),
         "humdity": dht22.get_humidity(dht),
-        "thermo": max6675.get_temperature(spi, cs, False),
     }
+    print(data)
+    time.sleep(5)
 
     g.set_function(lambda: dht22.get_temperature(dht, False))
     h.set_function(lambda: dht22.get_humidity(dht))
@@ -28,6 +28,7 @@ if __name__ == "__main__":
 
     spi, cs = max6675.initialize()
     data = {"thermo": max6675.get_temperature(spi, cs, False)}
+    print(data)
     i.set_function(lambda: data["thermo"])
 
     start_http_server(8000)
