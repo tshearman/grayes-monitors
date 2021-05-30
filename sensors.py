@@ -24,7 +24,6 @@ if __name__ == "__main__":
 
     g.set_function(lambda: dht22.get_temperature(dht, False))
     h.set_function(lambda: dht22.get_humidity(dht))
-    i.set_function(lambda: data["thermo"])
 
     spi, cs = max6675.initialize()
     data = {"thermo": max6675.get_temperature(spi, cs, False)}
