@@ -1,0 +1,11 @@
+[Unit]
+Description=Grayes Greenhouse Monitors: MAX6675
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /home/toby/grayes-monitors/max6675/max6675.py
+Restart=always
+User=toby
+
+[Install]
+WantedBy=multi-user.target

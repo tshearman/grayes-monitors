@@ -1,5 +1,5 @@
 [Unit]
-Description=Grayes Greenhouse Monitors
+Description=Grayes Greenhouse Monitors: DHT22
 
 [Service]
 Type=idle
