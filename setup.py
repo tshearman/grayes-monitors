@@ -7,5 +7,4 @@ setup(
         'prometheus-client>=0.10.1',
         'adafruit-circuitpython-dht==3.6.0',
     ]
-    scripts=['dht22.py']
 )

@@ -1,9 +1,9 @@
 [Unit]
-Description=Temperature and Humidity Sensor
+Description=Grayes Greenhouse Monitors
 
 [Service]
 Type=idle
-ExecStart=/usr/bin/python3 /home/toby/grayes-monitors/dht22.py
+ExecStart=/usr/bin/python3 /home/toby/grayes-monitors/dht22/dht22.py
 Restart=always
 User=toby
 
