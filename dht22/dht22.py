@@ -21,10 +21,13 @@ def get_temperature(dhtSensor, in_celsius=True, digits=3, attempts=5):
             pass
 
 
-def get_humidity(dhtSensor, digits=3):
+def get_humidity(dhtSensor, digits=3, attempts=5):
     while True:
         try:
-            return round(dhtSensor.humidity, digits)
+            h = dhtSensor.humidity
+            if h:
+                return round(h, digits)
+            return get_humidity(dhtSensor, digits, attempts-1)
         except RuntimeError:
             pass
 
