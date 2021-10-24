@@ -75,7 +75,7 @@ if __name__ == "__main__":
     spi, cs = initialize()
     t = {"temp": get_temperature(spi, cs, False)}
 
-    g = Gauge("temperature", "Temperature")
+    g = Gauge("thermocouple", "Thermocouple")
     g.set_function(lambda: t["temp"])
 
     start_http_server(8002)
